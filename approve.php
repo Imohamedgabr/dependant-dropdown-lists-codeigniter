@@ -159,4 +159,38 @@
 
 	   
 	}
+
+
+	/**
+	 * Get_Where
+	 *
+	 * Allows the where clause, limit and offset to be added directly
+	 *
+	 * @param	string	$table
+	 * @param	string	$where
+	 * @param	int	$limit
+	 * @param	int	$offset
+	 * @return	CI_DB_result
+	 */
+	public function get_where($table = '', $where = NULL, $limit = NULL, $offset = NULL)
+	{
+		if ($table !== '')
+		{
+			$this->from($table);
+		}
+
+		if ($where !== NULL)
+		{
+			$this->where($where);
+		}
+
+		if ( ! empty($limit))
+		{
+			$this->limit($limit, $offset);
+		}
+
+		$result = $this->query($this->_compile_select());
+		$this->_reset_select();
+		return $result;
+	}
 ?>
